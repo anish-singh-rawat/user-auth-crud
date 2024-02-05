@@ -1,8 +1,9 @@
-import Image from "next/image";
+import SignIn from "@/components/SigIn/page";
 
 export default function Home() {
   return (
     <>
+    <SignIn/>
     </>
   );
 }
