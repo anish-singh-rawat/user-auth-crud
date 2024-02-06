@@ -18,6 +18,10 @@ const userSchema = new Schema({
         require : [true],
         type : Schema.Types.String,
     },
+    // Image : {
+    //     require : [true],
+    //     type : Schema.Types.String,
+    // },
     role : {
          require : [true],
         type : String,

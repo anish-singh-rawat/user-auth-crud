@@ -1,8 +1,6 @@
 import { NextResponse } from "next/server";
-import { connect } from "../../../../database/mongo.config";
 import { Admin } from "../../../../adminModel/User";
 
-connect();
 export async function GET() {
     try {
         const users = await Admin.find();

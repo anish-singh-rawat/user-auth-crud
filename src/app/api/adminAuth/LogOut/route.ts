@@ -1,8 +1,6 @@
 import {NextResponse } from "next/server";
-import { connect } from "../../../../../database/mongo.config";
 import { cookies } from "next/headers";
 
-connect();
 export async function POST() {
   try {
     const token = cookies();

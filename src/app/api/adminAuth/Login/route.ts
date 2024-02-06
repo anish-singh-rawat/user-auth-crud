@@ -4,7 +4,7 @@ import { Admin } from "../../../../../adminModel/User";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 
-connect();
+connect()
 const KEY = "anishsinghrawat"
 export async function POST(request: NextRequest) {
   try {

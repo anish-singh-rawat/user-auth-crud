@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connect } from "../../../../../database/mongo.config";
 import { Admin } from "../../../../../adminModel/User";
 
-connect();
+connect()
 export async function POST(request: NextRequest) {
   try {
     const { name, email, password, confirmPassword ,role} = await request.json();

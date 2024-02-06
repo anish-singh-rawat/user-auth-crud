@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { connect } from "../../../../../database/mongo.config";
 import { User } from "../../../../../UserModel/User";
 
 
-connect();
 export async function POST(request: NextRequest) {
   try {
     const { email, password } = await request.json();

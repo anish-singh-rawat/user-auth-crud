@@ -17,6 +17,7 @@ const SignUp = () => {
     email: '',
     password: '',
     confirmPassword: '',
+    userImage : '',
     role: 'admin'
   })
   const submitForm = async (e: any) => {
@@ -27,7 +28,7 @@ const SignUp = () => {
       const res = await axios.post("/api/adminAuth/Register", signUpState)
       const response = res.data;
       if (response.status === 201) {
-        
+
         toast.success("Successfully registered Login now!")
         setValidationErrors({})
         setSignUpStatus({
@@ -35,6 +36,7 @@ const SignUp = () => {
           email: '',
           password: '',
           confirmPassword: '',
+          userImage : '',
           role: 'admin'
         })
         setLoader(false)
@@ -51,6 +53,7 @@ const SignUp = () => {
           email: '',
           password: '',
           confirmPassword: '',
+          userImage : '',
           role: 'admin'
         })
         setLoader(false)
@@ -87,9 +90,9 @@ const SignUp = () => {
   return (
     <>
       <ToastContainer />
-      <div className="min-h-screen  bg-slate-200 text-gray-800 antialiased px-4 py-6 flex flex-col justify-center sm:py-12">
-        <div className="parent-div  py-3 sm:max-w-xl mx-auto text-center">
-          <div className="relative mt-4 bg-slate-400 shadow-md sm:rounded-lg text-left w-full sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl mx-auto">
+      <div className="min-h-screen bg-slate-200 text-gray-800 antialiased flex flex-col justify-center ">
+        <div className="parent-div sm:max-w-xl mx-auto text-center">
+          <div className="relative bg-slate-400 shadow-md sm:rounded-lg text-left w-full sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl mx-auto">
             <div className="text-center bg-indigo-500 p-2 rounded-t-md">
               <span className="text-2xl font-bold text-white">
                 Register to your account
@@ -110,6 +113,18 @@ const SignUp = () => {
                       <p className="text-red-700 mt-1">{validationErrors[fieldName]}</p>}
                   </div>
                 ))}
+
+                <div>
+                   <label className="mt-3  block font-semibold">Image </label>
+                   <input
+                      type='file'
+                      className="border w-full h-10 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-600 rounded-md"
+                      required={true}
+                      onChange={(e) => setSignUpStatus({ ...signUpState, userImage : 
+                      e.target.files![0] })} />
+                </div>
+
+                </div>
                 <div className="flex justify-center items-baseline">
                   {
                     loader ? <CircularProgress className='mt-4' /> :
@@ -119,7 +134,6 @@ const SignUp = () => {
                 <div className='mt-3 text-sky-800 flex justify-center max-sm:mt-4 max-sm:flex-col max-sm:text-center'> already have an account ?
                   <Link href="/" className='mx-2'>LogIn now</Link>
                 </div>
-              </div>
             </form>
           </div>
         </div>

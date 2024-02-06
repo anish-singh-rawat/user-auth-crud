@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { connect } from "../../../../database/mongo.config";
 import { User } from "../../../../UserModel/User";
+import { connect } from "../../../../database/mongo.config";
 
-connect();
+connect()
 export async function GET(request : NextRequest) {
     try {
         const page: number = parseInt(request.nextUrl.searchParams.get("page") ?? "1", 1);
