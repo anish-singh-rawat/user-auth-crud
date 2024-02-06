@@ -71,14 +71,12 @@ const SignUp = () => {
   const signupSchema = Yup.object({
     name: Yup.string()
       .min(4, "minimum 4 character should be there !")
-      .max(8, "maximum 8 character should be there !")
       .required("name cannot be empty!"),
     email: Yup.string()
       .email("Invalid email format")
       .required("email cannot be empty!"),
     password: Yup.string()
       .min(6, "minimum 6 character should be there !")
-      .max(8, "maximum 8 character should be there !")
       .required("password cannot be empty!"),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password")], "Passwords must match")

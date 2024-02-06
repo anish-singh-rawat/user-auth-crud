@@ -2,7 +2,15 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
-import { deleteCookie } from 'cookies-next';
+import axiosInstance from '../../../axiosInstance/Instance';
+import { redirect } from 'next/dist/server/api-utils';
+
+const deleteCookie = async ()=>{
+ const res =  await axiosInstance.post("/api/adminAuth/LogOut")
+  if(res.status == 200){
+    window.location.href = '/'; 
+  }
+}
 
 export const allFilesData = [
   { fileName: 'Profile', icon: <AccountCircleIcon />, path: '/dashboard/userProfile' },
@@ -11,6 +19,6 @@ export const allFilesData = [
   
   { fileName: 'Add User', icon: <PersonAddAltIcon />, path: '/dashboard/AddUser' },
 
-  { fileName: 'LogOut', icon: <PowerSettingsNewIcon onClick={()=> deleteCookie('token')} 
- />, path: '/' },
+  { fileName: 'LogOut', icon: <PowerSettingsNewIcon onClick={()=>deleteCookie()} 
+ />, path: '/'},
 ]

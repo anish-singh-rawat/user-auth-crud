@@ -1,31 +1,30 @@
 import React from 'react';
 import './UserProfile.css';
 import img from './img.png';
-
-
+import { cookies } from 'next/headers';
+import { jwtDecode } from "jwt-decode";
 
 const UserProfile = async () => {
-
-  const randomNumber = Math.floor(Math.random() * (500 - 100 + 1)) + 100;
-  const randomNumber2 = Math.floor(Math.random() * (5000 - 1000 + 1)) + 1000;
-  
+  const tokenValues = cookies()
+  const userData = tokenValues.get('authToken')
+  const data =  jwtDecode(userData.value)
+  const {_id, name, email, role} = data.existUser
   return (
     <>
-    <div className='p-8' style={{minHeight : '100vh'}}>
+    <div className='profile-responsive'>
       <div className='header'>
         <div className='top-left-header flex'>
           <div className='sub-pic'>
             <img src={img.src} alt='Profile Pic' className='sub-pic' />
           </div>
           <div className='top-sub-header mt-2 mx-3'>
-            {/* <div className="name">Employee Name: {userName}</div> */}
-            <div className='id'>Employee ID: {randomNumber}</div>
+            <div className="name">Employee Name : {name}</div>
+            <div className='id mt-2'>Employee ID : {_id}</div>
           </div>
         </div>
         <div className='top-right-header'>
-          {/* <div className="name">Employee email: {userEmail} </div> */}
-          <div className='work'>Designation: React JS Developer</div>
-          <div className='id'>Employee UID: {randomNumber2}</div>
+          <div className="name">Employee email : {email} </div>
+          <div className='work mt-2'>Designation : React JS Developer {role}</div>
         </div>
       </div>
         <div className='mt-4 text-4xl flex justify-center'>
@@ -64,7 +63,7 @@ const UserProfile = async () => {
           </div>
         </div>
       </div>
-      </div>
+    </div>
     </>
   );
 };

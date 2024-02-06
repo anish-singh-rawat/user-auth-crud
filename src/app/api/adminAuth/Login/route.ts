@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connect } from "../../../../../database/mongo.config";
 import { Admin } from "../../../../../adminModel/User";
 import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 connect();
 const KEY = "anishsinghrawat"
@@ -27,6 +28,7 @@ export async function POST(request: NextRequest) {
           {existUser : existUser},
           KEY
         );
+        cookies().set("authToken", authToken)
         return NextResponse.json({
           status: 201,
           token: authToken,

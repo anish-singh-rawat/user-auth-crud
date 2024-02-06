@@ -5,13 +5,9 @@ import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as Yup from 'yup';
-import { useRouter } from 'next/navigation';
 import { CircularProgress } from '@mui/material';
-import { setCookie } from 'cookies-next';
-
 
 const SignIn = () => {
-    const router = useRouter()
     const [loader, setLoader] = useState<boolean>(false);
     const [validationErrors, setValidationErrors] = useState<any>({});
     const [loginState, setLoginState] = useState<any>({
@@ -27,36 +23,27 @@ const SignIn = () => {
             await signupSchema.validate(loginState, { abortEarly: false });
             const res = await axios.post("/api/adminAuth/Login", loginState)
             const response = res.data;
-            if (response.status === 201) {
-                if (response.token) {
-                  
+            if (response.status === 201 && response.token) {
                     toast.success("Successfully Login!")
                     setValidationErrors({})
                     setLoginState({
                         email: '',
                         password: ''
                     })
-                    setLoader(false)
-                    setCookie('token', response.token);
-                    setTimeout(() => {
-                        router.push('/dashboard')
-                    }, 1000);
-                    return
-                }
-                if (response.status === 400) {
-                    setValidationErrors({})
-                    toast.error("User does not exit !")
-                    setLoginState({
-                        email: '',
-                        password: '',
-                    })
-                    setLoader(false)
-                }
-                if (response.status === 401) {
-                    setValidationErrors({})
-                    toast.error("password incorrect!")
-                    setLoader(false)
-                }
+                    window.location.href = '/';
+                    setTimeout(()=>{
+                        setLoader(false)
+                    },10000)
+                    return;
+            }
+            if (response.status === 400) {
+                setValidationErrors({})
+                toast.error("User does not exit !")
+                setLoader(false)
+            }
+            if (response.status === 401) {
+                setValidationErrors({})
+                toast.error("password incorrect!")
                 setLoader(false)
             }
         }
