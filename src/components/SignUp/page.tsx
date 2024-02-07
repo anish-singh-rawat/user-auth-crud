@@ -12,14 +12,16 @@ const SignUp = () => {
   const router = useRouter()
   const [validationErrors, setValidationErrors] = useState<any>({});
   const [loader, setLoader] = useState<boolean>(false);
+  const [file, setFile] = useState<any>(null);
+
   const [signUpState, setSignUpStatus] = useState<any>({
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
-    userImage : '',
     role: 'admin'
   })
+  
   const submitForm = async (e: any) => {
     e.preventDefault();
     setLoader(true)
@@ -28,6 +30,15 @@ const SignUp = () => {
       const res = await axios.post("/api/adminAuth/Register", signUpState)
       const response = res.data;
       if (response.status === 201) {
+        const formData = new FormData();
+        formData.append('file', file);
+        await axios.post('/api/fileUpload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        toast.success('Image uploaded successfully!')
+        setFile(null);
 
         toast.success("Successfully registered Login now!")
         setValidationErrors({})
@@ -120,8 +131,9 @@ const SignUp = () => {
                       type='file'
                       className="border w-full h-10 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-600 rounded-md"
                       required={true}
-                      onChange={(e) => setSignUpStatus({ ...signUpState, userImage : 
-                      e.target.files![0] })} />
+                      onChange={ (e : any) => {
+                        setFile(e.target.files?.[0]);
+                      }} />
                 </div>
 
                 </div>

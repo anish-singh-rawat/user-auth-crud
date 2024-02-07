@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
 
     if (!name || !email || !password || !contactNo || !address || !course) {
       return NextResponse.json({
-        status: 400,
+        status: 402,
         errors: {
         message: "blank email or password. Please provide both email and password fields.",
         },
@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
     if (password !== confirmPassword) {
       return NextResponse.json(
         { message: "password and confirmPassword should be same" },
-        { status: 400 }
+        { status: 401 }
       );
     }
 

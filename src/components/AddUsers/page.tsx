@@ -36,11 +36,11 @@ const SignUp = () => {
           confirmPassword: '',
           contactNo: '',
           address: '',
-          course: '',
+          course: null,
           role: 'user'
         })
         setLoader(false)
-        return
+        return;
       }
       if (response.status === 400) {
         setValidationErrors({})
@@ -52,12 +52,17 @@ const SignUp = () => {
           confirmPassword: '',
           contactNo: '',
           address: '',
-          course: '',
+          course: null,
           role: 'user'
         })
         setLoader(false)
+        return;
       }
-      setLoader(false)
+      if (response.status === 402) {
+        toast.error("Please select any Course !")
+        setLoader(false)
+        return;
+      }
     } catch (error) {
       setLoader(false)
       if (error instanceof Yup.ValidationError) {
@@ -129,9 +134,10 @@ const SignUp = () => {
                   <InputLabel className='bg-slate-600'
                     id="demo-simple-select-label">Course</InputLabel>
                   <Select labelId="demo-simple-select-label"
-                    id="demo-simple-select" required
+                    id="demo-simple-select" required={true}
                     defaultValue={''}
-                    label="age" value={signUpState.country}
+                    label="Course" 
+                    value={signUpState.course}
                     onChange={(e) =>
                       setSignUpStatus({
                         ...signUpState,
