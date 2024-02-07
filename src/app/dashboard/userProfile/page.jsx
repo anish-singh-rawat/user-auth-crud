@@ -1,8 +1,8 @@
 import React from 'react';
 import './UserProfile.css';
-import img from './img.png';
 import { cookies } from 'next/headers';
 import { jwtDecode } from "jwt-decode";
+import img from '../../../../public/images/File.jpg'
 
 const UserProfile = async () => {
   const tokenValues = cookies()

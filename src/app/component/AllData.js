@@ -3,7 +3,6 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 import StackedBarChartIcon from '@mui/icons-material/StackedBarChart';
 import axiosInstance from '../../../axiosInstance/Instance';
-import { redirect } from 'next/dist/server/api-utils';
 
 const deleteCookie = async ()=>{
  const res =  await axiosInstance.post("/api/adminAuth/LogOut")
