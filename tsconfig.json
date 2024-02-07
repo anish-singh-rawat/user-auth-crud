@@ -21,6 +21,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/HomePage/AllData.js", "src/app/HomePage/page.jsx", "src/Provider/NextAuthProvider.tsx", "src/app/dashboard/AllUsers/page.tsx", "src/app/api/getUsers/route.ts", "src/components/AllUserData/page.tsx", "src/app/dashboard/userProfile/page.jsx", "src/app/component/AllData.js", "src/app/api/fileUpload/route.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/HomePage/AllData.js", "src/app/HomePage/page.jsx", "src/Provider/NextAuthProvider.tsx", "src/app/dashboard/AllUsers/page.tsx", "src/app/api/getUsers/route.ts", "src/components/AllUserData/page.tsx", "src/app/dashboard/userProfile/page.jsx", "src/app/component/AllData.js", "src/app/api/fileUpload/route.ts"],
   "exclude": ["node_modules"]
 }
