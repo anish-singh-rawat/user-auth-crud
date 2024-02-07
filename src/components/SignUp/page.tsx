@@ -39,7 +39,6 @@ const SignUp = () => {
         });
         toast.success('Image uploaded successfully!')
         setFile(null);
-
         toast.success("Successfully registered Login now!")
         setValidationErrors({})
         setSignUpStatus({
@@ -55,18 +54,8 @@ const SignUp = () => {
         return
       }
       if (response.status === 400) {
-        setValidationErrors({
-
-        })
+        setValidationErrors({})
         toast.error("User already exit choose diffrent email !")
-        setSignUpStatus({
-          name: '',
-          email: '',
-          password: '',
-          confirmPassword: '',
-          userImage : '',
-          role: 'admin'
-        })
         setLoader(false)
       }
       setLoader(false)

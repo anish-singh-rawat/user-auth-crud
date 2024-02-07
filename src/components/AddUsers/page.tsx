@@ -45,16 +45,6 @@ const SignUp = () => {
       if (response.status === 400) {
         setValidationErrors({})
         toast.error("User already exit choose diffrent email !")
-        setSignUpStatus({
-          name: '',
-          email: '',
-          password: '',
-          confirmPassword: '',
-          contactNo: '',
-          address: '',
-          course: null,
-          role: 'user'
-        })
         setLoader(false)
         return;
       }

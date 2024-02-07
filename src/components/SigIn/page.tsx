@@ -33,12 +33,12 @@ const SignIn = () => {
                     window.location.href = '/';
                     setTimeout(()=>{
                         setLoader(false)
-                    },10000)
+                    },13000)
                     return;
             }
             if (response.status === 400) {
                 setValidationErrors({})
-                toast.error("User does not exit !")
+                toast.error("User does not exist !")
                 setLoader(false)
             }
             if (response.status === 401) {
