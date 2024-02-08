@@ -23,7 +23,7 @@ const fetchImages = async () => {
 };
 
 const img = await fetchImages();
-const profileImg = img[0].url
+const profileImg = img[0]?.url
 
   return (
     <>
