@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { User } from "../../../../../UserModel/User";
+import { PublicModel } from "../../../../../PublicModel/PublicModel";
+// import { User } from "../../../../../UserModel/User";
 
 
 export async function POST(request: NextRequest) {
@@ -14,7 +15,7 @@ export async function POST(request: NextRequest) {
         },
       });
     }
-    const existUser = await User.findOne({ email });
+    const existUser = await PublicModel.findOne({ email });
     // User exist
     if (existUser) {
       const existUserPassword = existUser.password;

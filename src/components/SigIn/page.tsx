@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import * as Yup from 'yup';
 import { CircularProgress } from '@mui/material';
 import axiosInstance from '../../../axiosInstance/Instance';
+import { jwtDecode } from 'jwt-decode';
 
 const SignIn = () => {
     const [loader, setLoader] = useState<boolean>(false);
@@ -24,17 +25,37 @@ const SignIn = () => {
             const res = await axiosInstance.post("/api/adminAuth/Login", loginState)
             const response = res.data;
             if (response.status === 201 && response.token) {
-                toast.success("Successfully Login!")
-                setValidationErrors({})
-                setLoginState({
-                    email: '',
-                    password: ''
-                })
-                window.location.href = '/';
-                setTimeout(() => {
-                    setLoader(false)
-                }, 13000)
-                return;
+                const Token = response.token
+                const data: any = jwtDecode(Token)
+                const { role }: any = data.existUser;
+                if (role.toLowerCase() === "admin") {
+                    toast.success("Successfully Login!")
+                    setValidationErrors({})
+                    setLoginState({
+                        email: '',
+                        password: ''
+                    })
+                    window.location.href = '/dashboard';
+                    setTimeout(() => {
+                        setLoader(false)
+                    }, 13000)
+                    return;
+                }
+
+                if (role.toLowerCase() === "user") {
+                    toast.success("Successfully Login!")
+                    setValidationErrors({})
+                    setLoginState({
+                        email: '',
+                        password: ''
+                    })
+                    window.location.href = '/UserDashBoard';
+                    setTimeout(() => {
+                        setLoader(false)
+                    }, 13000)
+                    return;
+                }
+              
             }
             if (response.status === 400) {
                 setValidationErrors({})

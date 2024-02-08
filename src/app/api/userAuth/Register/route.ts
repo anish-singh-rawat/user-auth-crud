@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { User } from "../../../../../UserModel/User";
+import { PublicModel } from "../../../../../PublicModel/PublicModel";
+// import { User } from "../../../../../UserModel/User";
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,7 +26,7 @@ export async function POST(request: NextRequest) {
     }
 
     //*  check that the email is already exist or not
-    const user = await User.findOne({ email: email });
+    const user = await PublicModel.findOne({ email: email });
     if (user) {
       return NextResponse.json(
         { status: 400, error: { email: "Email already exists" } },
@@ -34,7 +35,7 @@ export async function POST(request: NextRequest) {
     }
 
     //*  create a new user
-    await User.create({ name, email, password ,address ,contactNo, course, role});
+    await PublicModel.create({ name, email, password ,address ,contactNo, course, role});
     return NextResponse.json(  
      { status: 201 , message: "User Create Successfully" },
       { status: 201 } );

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { User } from "../../../../UserModel/User";
+// import { User } from "../../../../UserModel/User";
 import { connect } from "../../../../database/mongo.config";
+import { PublicModel } from "../../../../PublicModel/PublicModel";
 
 connect();
 export async function GET(request: NextRequest) {
@@ -19,7 +20,7 @@ export async function GET(request: NextRequest) {
     }
 
     const skip = (pageNumber - 1) * limitNumber;
-    const users = await User.find().skip(skip).limit(limitNumber);
+    const users = await PublicModel.find().skip(skip).limit(limitNumber);
 
     return NextResponse.json({ users }, { status: 200 });
   } catch (error: any) {

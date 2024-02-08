@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import { Admin } from "../../../../adminModel/User";
+// import { Admin } from "../../../../adminModel/User";
 import { connect } from "../../../../database/mongo.config";
+import { PublicModel } from "../../../../PublicModel/PublicModel";
 
 connect();
 export async function PUT(request: NextResponse) {
@@ -14,7 +15,7 @@ export async function PUT(request: NextResponse) {
       });
     }
 
-    const user = await Admin.findOne({ email });
+    const user = await PublicModel.findOne({ email });
 
     if (!user) {
       return NextResponse.json({
@@ -26,7 +27,7 @@ export async function PUT(request: NextResponse) {
     if (user) {
       if (password == confirmPassword) {
         const { _id } = user;
-        await Admin.findByIdAndUpdate(_id, { password }, { new: true });
+        await PublicModel.findByIdAndUpdate(_id, { password }, { new: true });
         return NextResponse.json({
           status: 200,
           message: "User updated Successfully",

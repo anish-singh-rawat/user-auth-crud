@@ -1,10 +1,10 @@
 'use client'
 import { Box, CircularProgress, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import axios from 'axios';
 import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as Yup from 'yup';
+import axiosInstance from '../../../axiosInstance/Instance';
 
 const SignUp = () => {
   const [validationErrors, setValidationErrors] = useState<any>({});
@@ -24,7 +24,7 @@ const SignUp = () => {
     setLoader(true)
     try {
       await signupSchema.validate(signUpState, { abortEarly: false });
-      const res = await axios.post("/api/userAuth/Register", signUpState)
+      const res = await axiosInstance.post("/api/userAuth/Register", signUpState)
       const response = res.data;
       if (response.status === 201) {
         toast.success("Successfully registered !")

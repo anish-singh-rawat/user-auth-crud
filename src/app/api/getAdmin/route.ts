@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
-import { Admin } from "../../../../adminModel/User";
+import { PublicModel } from "../../../../PublicModel/PublicModel";
+// import { Admin } from "../../../../adminModel/User";
 
 export async function GET() {
     try {
-        const users = await Admin.find();
+        const users = await PublicModel.find();
         return NextResponse.json(
             {users},
             {status: 200}

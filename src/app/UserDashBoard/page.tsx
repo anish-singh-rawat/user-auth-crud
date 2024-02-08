@@ -1,5 +1,6 @@
-import ExampleWithProviders from '@/components/AllUsersMRT/UsersData';
-import axiosInstance from '../../../../axiosInstance/Instance';
+import React from 'react'
+import UserExampleProvider from '@/components/UserDashboard/page'
+import axiosInstance from '../../../axiosInstance/Instance';
 
 const getAllUser = async () => {
   try {
@@ -10,13 +11,13 @@ const getAllUser = async () => {
     console.error("Error fetching data:", error);
   }
 };
-const AllUsersData = async () => {
+
+const page = async () => {
   const  UserData = await getAllUser();
   const allUsers = UserData.filter((data : any) => data.role.toLowerCase() != 'admin');
-  
   return (
-  <ExampleWithProviders allUsers={allUsers} />
+    <UserExampleProvider allUsers={allUsers} />
   )
-};
+}
 
-export default AllUsersData;
+export default page

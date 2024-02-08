@@ -26,22 +26,31 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Link from 'next/link';
+import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
+import axiosInstance from '../../../axiosInstance/Instance';
 
 type User = {
-  name : string;
+  name: string;
   email: string;
   address: string;
-  contactNo : string;
+  contactNo: string;
   course: string;
 };
 
 const fakeData: User[] = [];
 
-const UsersData = ({allUsers} : any) => {
+const UsersData = ({ allUsers }: any) => {
 
   const [validationErrors, setValidationErrors] = useState<
     Record<string, string | undefined>
   >({});
+
+  const deleteCookie = async () => {
+    const res = await axiosInstance.post("/api/adminAuth/LogOut")
+    if (res.status == 200) {
+      window.location.href = '/';
+    }
+  }
 
   const columns = useMemo<MRT_ColumnDef<User>[]>(
     () => [
@@ -154,7 +163,7 @@ const UsersData = ({allUsers} : any) => {
     }
     setValidationErrors({});
     await createUser(values);
-    table.setCreatingRow(null); 
+    table.setCreatingRow(null);
   };
 
   //UPDATE action
@@ -176,7 +185,7 @@ const UsersData = ({allUsers} : any) => {
   const openDeleteConfirmModal = (row: MRT_Row<any>) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       deleteUser(row.original);
-    }    
+    }
   };
 
   const table = useMaterialReactTable({
@@ -229,7 +238,7 @@ const UsersData = ({allUsers} : any) => {
         </DialogActions>
       </>
     ),
-    renderRowActions: ({ row, table } : any) => (
+    renderRowActions: ({ row, table }: any) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
         <Tooltip title="Edit">
           <IconButton onClick={() => table.setEditingRow(row)}>
@@ -243,10 +252,16 @@ const UsersData = ({allUsers} : any) => {
         </Tooltip>
       </Box>
     ),
+
     renderTopToolbarCustomActions: () => (
-      <Link href='/dashboard/AddUser' className='bg-blue-600 rounded-lg p-2'>
-        Create New User
-      </Link>
+      <>
+        {/* <PowerSettingsNewIcon className='bg-blue-600 h-12 w-12 rounded-lg p-2 cursor-pointer'
+      onClick={()=>deleteCookie()}/>  */}
+        <div className='bg-blue-600 h-10 w-32 rounded-lg p-2 cursor-pointer' onClick={() => deleteCookie()}>
+          Logout
+          <PowerSettingsNewIcon className='mx-4' />
+        </div>
+      </>
     ),
     state: {
       isLoading: isLoadingUsers,
@@ -310,8 +325,8 @@ function useUpdateUser() {
     },
     //client side optimistic update
     onMutate: (newUserInfo: User) => {
-     
-      
+
+
       queryClient.setQueryData(['users'], (prevUsers: any) =>
         prevUsers?.map((prevUser: User) =>
           prevUser.email === newUserInfo.email ? newUserInfo : prevUser,
@@ -334,21 +349,21 @@ function useDeleteUser() {
     //client side optimistic update
     onMutate: (userId: any) => {
       queryClient.setQueryData(['users'], (prevUsers: any) =>
-      prevUsers?.filter((user: any) => user.email !== userId.email),
-      )          
+        prevUsers?.filter((user: any) => user.email !== userId.email),
+      )
     },
   })
 }
 
 const queryClient = new QueryClient();
 
-const ExampleWithProviders = ({allUsers} : any) => (
+const UserExampleProvider = ({ allUsers }: any) => (
   <QueryClientProvider client={queryClient}>
-    <UsersData  allUsers={allUsers}/>
+    <UsersData allUsers={allUsers} />
   </QueryClientProvider>
 );
 
-export default ExampleWithProviders;
+export default UserExampleProvider;
 
 const validateRequired = (value: string) => !!value.length;
 const validateEmail = (email: string) =>

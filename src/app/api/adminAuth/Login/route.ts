@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connect } from "../../../../../database/mongo.config";
-import { Admin } from "../../../../../adminModel/User";
+// import { Admin } from "../../../../../adminModel/User";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
+import { PublicModel } from "../../../../../PublicModel/PublicModel";
 
 connect()
 const KEY = "anishsinghrawat"
@@ -18,7 +19,7 @@ export async function POST(request: NextRequest) {
         },
       });
     }
-    const existUser = await Admin.findOne({ email });
+    const existUser = await PublicModel.findOne({ email });
     // User exist
     if (existUser) {
       const existUserPassword = existUser.password;
