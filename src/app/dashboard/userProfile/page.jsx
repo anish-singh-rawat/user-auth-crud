@@ -2,20 +2,36 @@ import React from 'react';
 import './UserProfile.css';
 import { cookies } from 'next/headers';
 import { jwtDecode } from "jwt-decode";
-import img from '../../../../public/images/File.jpg'
+import axiosInstance from '../../../../axiosInstance/Instance';
 
 const UserProfile = async () => {
   const tokenValues = cookies()
   const userData = tokenValues.get('authToken')
   const data =  jwtDecode(userData.value)
   const {_id, name, email, role} = data.existUser
+
+const fetchImages = async () => {
+  try {
+    const response = await axiosInstance.get('/api/GetProfile');
+    const data = response.data;
+    const profileImg = data.images.filter(img => img.name === `${email}.jpg`);
+    return profileImg;
+  } catch (error) {
+    console.error('Error fetching images:', error);
+    throw error;
+  }
+};
+
+const img = await fetchImages();
+const profileImg = img[0].url
+
   return (
     <>
     <div className='profile-responsive'>
       <div className='header'>
         <div className='top-left-header flex'>
           <div className='sub-pic'>
-            <img src={img.src} alt='Profile Pic' className='sub-pic' />
+            <img src={profileImg} alt='Loading....' className='sub-pic' />
           </div>
           <div className='top-sub-header mt-2 mx-3'>
             <div className="name">Employee Name : {name}</div>

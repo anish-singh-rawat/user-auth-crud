@@ -32,7 +32,7 @@ const SignUp = () => {
       if (response.status === 201) {
         const formData = new FormData();
         formData.append('file', file);
-        await axios.post('/api/fileUpload', formData, {
+        await axios.post(`/api/fileUpload?email=${signUpState.email}` , formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
