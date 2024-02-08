@@ -19,7 +19,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { allFilesData } from './AllData';
 import Link from 'next/link';
-import { Avatar } from '@mui/material';
+import { Avatar, Stack } from '@mui/material';
 import img from './img.png'
 import './Test.css';
 
@@ -152,10 +152,10 @@ export default function MiniDrawer({ pages }) {
           ))}
         </List>
       </Drawer>
-      <Box className={`${open&&'responsive'}`} component="main" sx={{ flexGrow: 1, minHeight : '100vh'}}>
+      <Stack className={`${open&&'responsive'}`} component="main" sx={{  flexGrow: 1, minHeight : '100vh', minWidth : '10%'}}>
         <DrawerHeader />
         {pages}
-      </Box>
+      </Stack>
 
     </Box>
   );
