@@ -6,13 +6,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import * as Yup from 'yup';
 import { CircularProgress } from '@mui/material';
 import axiosInstance from '../../../axiosInstance/Instance';
+import { useRouter } from 'next/navigation';
 
-const SignIn = () => {
+const ForgetPassword = () => {
+    const router = useRouter()
     const [loader, setLoader] = useState<boolean>(false);
     const [validationErrors, setValidationErrors] = useState<any>({});
     const [loginState, setLoginState] = useState<any>({
         email: '',
         password: '',
+        confirmPassword: ''
     })
 
     const handleSubmit = async (e: any) => {
@@ -21,30 +24,27 @@ const SignIn = () => {
 
         try {
             await signupSchema.validate(loginState, { abortEarly: false });
-            const res = await axiosInstance.post("/api/adminAuth/Login", loginState)
+            const res = await axiosInstance.put("/api/forgetPassword", loginState)
             const response = res.data;
-            if (response.status === 201 && response.token) {
-                toast.success("Successfully Login!")
+            if (response.status === 200) {
+                toast.success("Successfully Update your password Login Now!")
                 setValidationErrors({})
                 setLoginState({
                     email: '',
-                    password: ''
+                    password: '',
+                    confirmPassword: ''
                 })
-                window.location.href = '/';
-                setTimeout(() => {
+                router.push('/')
+                setTimeout(()=>{
                     setLoader(false)
-                }, 13000)
+                },500) 
                 return;
             }
-            if (response.status === 400) {
+            if (response.status === 404) {
                 setValidationErrors({})
-                toast.error("User does not exist !")
+                toast.error("Email does not exist !")
                 setLoader(false)
-            }
-            if (response.status === 401) {
-                setValidationErrors({})
-                toast.error("password incorrect!")
-                setLoader(false)
+                return;
             }
         }
         catch (error) {
@@ -64,7 +64,10 @@ const SignIn = () => {
             .email("Invalid email format")
             .required("email cannot be empty!"),
         password: Yup.string()
-            .required("password cannot be empty!")
+            .required("password cannot be empty!"),
+        confirmPassword: Yup.string()
+            .oneOf([Yup.ref("password")], "Passwords & confirm password must match")
+            .required("confirm password cannot be empty!"),
     });
     return (
         <>
@@ -73,7 +76,9 @@ const SignIn = () => {
                 <div className="parent-div  py-3 sm:max-w-xl mx-auto text-center">
                     <div className="relative mt-4 bg-slate-400 shadow-md sm:rounded-lg text-left w-full sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl mx-auto">
                         <div className="text-center p-2 bg-indigo-500 rounded-t-md">
-                            <span className="text-2xl font-bold text-white">Login to your account</span>
+                            <span className="text-2xl font-bold text-white">
+                                Forget Password
+                            </span>
                         </div>
 
                         <form onSubmit={handleSubmit}>
@@ -88,8 +93,21 @@ const SignIn = () => {
                                 <input type="password" placeholder="Password" className="border w-full h-10 px-3 py-2 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-600 rounded-md"
                                     value={loginState.password} onChange={(e) => setLoginState({ ...loginState, password: e.target.value })}
                                 />
-                                {validationErrors.password && (
+                                  {validationErrors.password && (
                                     <span className="text-red-700 text-sm">{validationErrors.password}</span>
+                                )}
+
+
+
+
+                               <label className="block mt-3 font-semibold">
+                                confirmPassword</label>
+                                <input type="password" placeholder="Password" className="border w-full h-10 px-3 py-2 mt-2 hover:outline-none focus:outline-none focus:ring-1 focus:ring-indigo-600 rounded-md"
+                                    value={loginState.confirmPassword} onChange={(e) => setLoginState({ ...loginState, confirmPassword: e.target.value })}
+                                />
+
+                                {validationErrors.confirmPassword && (
+                                    <span className="text-red-700 text-sm">{validationErrors.confirmPassword}</span>
                                 )}
 
 
@@ -97,11 +115,11 @@ const SignIn = () => {
                                     {
                                         loader ? <CircularProgress className='mt-4' /> :
                                             <button className="mt-4 bg-indigo-500 text-white py-2 px-6 rounded-lg hover:bg-indigo-600">
-                                                Login</button>
+                                                submit</button>
                                     }
 
-                                    <Link href="/ForgetPassword" className="text-sm ">
-                                        Forgot password?
+                                    <Link href="/" className="text-sm ">
+                                        Go back to Hoe
                                     </Link>
                                 </div>
 
@@ -118,4 +136,4 @@ const SignIn = () => {
     )
 }
 
-export default SignIn
+export default ForgetPassword

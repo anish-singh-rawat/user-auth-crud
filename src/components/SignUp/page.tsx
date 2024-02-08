@@ -1,12 +1,12 @@
 'use client'
 import { CircularProgress } from '@mui/material';
-import axios from 'axios';
 import Link from 'next/link'
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as Yup from 'yup';
+import axiosInstance from '../../../axiosInstance/Instance';
 
 const SignUp = () => {
   const router = useRouter()
@@ -27,12 +27,12 @@ const SignUp = () => {
     setLoader(true)
     try {
       await signupSchema.validate(signUpState, { abortEarly: false });
-      const res = await axios.post("/api/adminAuth/Register", signUpState)
+      const res = await axiosInstance.post("/api/adminAuth/Register", signUpState)
       const response = res.data;
       if (response.status === 201) {
         const formData = new FormData();
         formData.append('file', file);
-        await axios.post(`/api/fileUpload?email=${signUpState.email}` , formData, {
+        await axiosInstance.post(`/api/fileUpload?email=${signUpState.email}` , formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
