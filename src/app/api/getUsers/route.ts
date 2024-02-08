@@ -8,8 +8,8 @@ export async function GET(request: NextRequest) {
   try {
     const page: number = parseInt(request.nextUrl.searchParams.get("page") ?? "1", 1);
     const limit: number = parseInt(
-      request.nextUrl.searchParams.get("limit") ?? "10",
-      10
+      request.nextUrl.searchParams.get("limit") ?? "11",
+      11
     );
     const pageNumber = isNaN(page) ? 1 : page;
     const limitNumber = isNaN(limit) ? 10 : limit;
