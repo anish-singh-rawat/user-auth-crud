@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.home-parent-div {
+    width: 85%;
+    background-color:  rebeccapurple;
+}
+
+ @media (min-width: 768px) {
+ .parent-div{
+    width: 600px;
+}
+}
+
+@media (max-width : 850px) {
+    .home-parent-div {
+        width: 95%;
+        background-color: rebeccapurple;
+    }
+}

@@ -1,0 +1,5 @@
+@media (max-width: 444px) {
+    .responsive{
+        display: none !important;
+    }
+}
